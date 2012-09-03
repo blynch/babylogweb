@@ -133,6 +133,9 @@
 			if($id) {
 				$response = $dm->updateRows("events", $data, array($id));
 			}
+			else { // Catch any missed update
+				return $this->createEvent($ctx);
+			}
 
 			if($response && $id) {
 				$indexedRows = $dm->getRows("events", $id);
@@ -145,6 +148,8 @@
 
 			}
 			else {
+
+				$responseJSON = json_encode($response);
 				echo "Update failure";
 			}
 
