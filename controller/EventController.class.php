@@ -53,6 +53,15 @@
 						$dm->addQueryParam($query, "id > $id");
 					}
 				}
+				if(isset($options['lastupdated'])) {
+					$lastUpdatedTimestamp = $options['lastupdated'];
+					$ctx->log->debug("LastUpdated: $lastUpdatedTimestamp");
+					$lastUpdated = new DateTime("@$lastUpdatedTimestamp");
+					if($lastUpdated) {
+						$ctx->log->debug("LastUpdated: ".$lastUpdated->format("Y-m-d H:i:s"));
+						$dm->addQueryParam($query, "updated_at > '".$lastUpdated->format("Y-m-d H:i:s")."'");
+					}
+				}
 			}
 
 			$query = "select * from events $query ";
@@ -60,7 +69,18 @@
 
 			$rows = $dm->queryGetRows($query);
 
-			$response = array("events" => $rows);
+			$response = $ctx->response;
+
+			$response['status']['success'] = true;
+			$response["events"] = $rows;
+
+			$tz = date_default_timezone_get();
+			$response['status']['tz'] = $tz;
+
+			$lastUpdated = new DateTime();
+			$lastUpdated = $lastUpdated->format("Y-m-d H:i:s");
+			$response['status']['updated'] = $lastUpdated;
+
 			$responseJSON = json_encode($response);
 
 			header('Content-type:application/json;charset=UTF-8');

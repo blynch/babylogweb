@@ -59,6 +59,8 @@ class Configuration
 		define('BASE_URL', "http://".$serverName);
 		define('SECURE_URL', "https://".$serverName);
 
+		// Set the timezone
+		date_default_timezone_set("UTC");
 
 		spl_autoload_register('globalautoload');
 	}

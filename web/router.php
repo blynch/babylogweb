@@ -8,6 +8,9 @@
   $ctx = new Context();
   $ctx->config = $config;
 
+  $response = array("status" => array("success" => false, "error" => null));
+  $ctx->response = $response;
+
   $log = Logger::getLogger("appname");
   $ctx->log = $log;
 
@@ -73,6 +76,7 @@
   $queryString = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : "";
 
   if(strlen($queryString) > 0) {
+    $ctx->log->debug("Query: $queryString");
     parse_str($queryString, $params);
     $ctx->options = $params;
   }
