@@ -78,7 +78,7 @@
 			$response['status']['tz'] = $tz;
 
 			$lastUpdated = new DateTime();
-			$lastUpdated = $lastUpdated->format("Y-m-d H:i:s");
+			$lastUpdated = $lastUpdated->getTimestamp();
 			$response['status']['updated'] = $lastUpdated;
 
 			$responseJSON = json_encode($response);
