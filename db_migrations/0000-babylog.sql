@@ -39,6 +39,7 @@ CREATE TABLE `events` (
     `content` varchar(512),
     `comment` varchar(1024),
     `deleted` tinyint(3) NOT NULL default 0,
+    `migrated` tinyint(1) default 0,
     `created_at` datetime DEFAULT NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
